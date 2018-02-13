@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Scheam;
+const Schema = mongoose.Schema;
 
 const User = new Schema({
   goingTo: Array
