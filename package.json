@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/WorldOfCode22/Awesome-Night#readme",
   "dependencies": {
+    "cookie-session": "^2.0.0-beta.3",
     "dotenv": "^5.0.0",
     "express": "^4.16.2",
-    "mongoose": "^5.0.5"
+    "mongoose": "^5.0.5",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0"
   }
 }

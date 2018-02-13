@@ -10,5 +10,5 @@ const Bar = new Schema({
   usersGoing: Number,
 })
 
-module.exports.User = User;
-module.exports.Bar = Bar;
+module.exports.User = mongoose.model('user',User);
+module.exports.Bar = mongoose.model('bar', Bar);
