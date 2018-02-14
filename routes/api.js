@@ -28,11 +28,12 @@ router.get('/bars/:location',(req,res)=>{
             if(barResults.length === 20){
               console.log(barResults.length);
               res.json({businesses: barResults});
-              break;
+              return;
             }
           }
       }
     }
+    res.json({businesses: barResults});
     }
   })
 })

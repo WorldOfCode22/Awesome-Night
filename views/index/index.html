@@ -29,6 +29,9 @@
           </form>
         </div>
       </div>
+      <div id='root'>
+
+      </div>
     </div>
   </body>
 <html>
@@ -39,8 +42,27 @@
       fetch('/api/bars/'+$('#search').val()).then(results=>{
         return results.json()
       }).then(results=>{
-        console.log(results);
+        renderResults(results.businesses);
+      }).catch(e=>{
+        console.log(e);
       })
     })
   })
+
+  function renderResults(resultsArr){
+    console.log(resultsArr);
+    let resultRender = $('<div/>');
+    for(let i = 0; i<resultsArr.length; i++){
+      var resultDiv = $('<div/>',{
+        class: 'row'
+      });
+      var imgDiv = $('<div/>',{
+        class: 'col'
+      });
+      imgDiv.append('<img class='+'img-fluid '+'src='+resultsArr[i].image_url+'>')
+      resultDiv.append(imgDiv);
+      resultRender.append(resultDiv);
+      $('#root').append(resultRender);
+    }
+  }
 </script>
