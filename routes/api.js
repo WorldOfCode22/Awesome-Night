@@ -37,44 +37,64 @@ router.get('/bars/:location',(req,res)=>{
   })
 })
 //vailidate yelpID
-//vailidate not already going
+
 router.get('/going/:yelpId',(req,res)=>{
   if(!req.user){
     res.send(ErrorLog.Error102);
   }else{
-    User.findById(req.user.id).then((user)=>{
-      if(user){
-        user.goingTo.push(req.params.yelpId);
-        return user.save().then(user=>{
-          return user;
-        })
-      }else{
-        res.send(ErrorLog.Error103)
+    client.business(req.params.yelpId).then((doc)=>{
+      if(doc){
+      console.log(doc);
+    }
+  }).catch(e=>{
+    var errorParse = JSON.parse(e.response.body);
+    console.log(errorParse.error.code);
+    if(errorParse.error.code === "BUSINESS_NOT_FOUND"){
+
+      return null;
+    }
+  }).then((val)=>{
+      if(val === null){
+        res.send(ErrorLog.Error104);
+        return null
       }
-    }).then((user)=>{
-      return Bar.findOne({yelpId:req.params.yelpId}).exec().then(bar=>{
-        if(bar){
-          bar.usersGoing.push(req.user.id);
-          return bar.save().then(()=>{
-            res.json({operation: "Finished"});
-          }).catch(e=>{
-            console.log(e);
+      return User.findById(req.user.id).then((user)=>{
+        if(user){
+          user.goingTo.push(req.params.yelpId);
+          return user.save().then(user=>{
+            return user;
           })
         }else{
-          return new Bar({
-            yelpId: req.params.yelpId,
-            usersGoing: [req.user.id]
-          }).save().then(()=>{
-            res.json({operation: "Finished"});
-          }).catch(e=>{
-            console.log(e);
-          })
+          res.send(ErrorLog.Error103)
         }
+      }).then((user)=>{
+        if(user === null){
+          return null;
+        }
+        return Bar.findOne({yelpId:req.params.yelpId}).exec().then(bar=>{
+          if(bar){
+            bar.usersGoing.push(req.user.id);
+            return bar.save().then(()=>{
+              res.json({operation: "Finished"});
+            }).catch(e=>{
+              console.log(e);
+            })
+          }else{
+            return new Bar({
+              yelpId: req.params.yelpId,
+              usersGoing: [req.user.id]
+            }).save().then(()=>{
+              res.json({operation: "Finished"});
+            }).catch(e=>{
+              console.log(e);
+            })
+          }
+        }).catch(e=>{
+          console.log(e)
+        })
       }).catch(e=>{
-        console.log(e)
+        console.log(e);
       })
-    }).catch(e=>{
-      console.log(e);
     })
   }
 })
