@@ -6,6 +6,7 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const authRouter = require('./routes/auth');
 const apiRouter = require('./routes/api');
+const path = require('path');
 
 require('./config/passport-setup');
 
@@ -20,6 +21,9 @@ app.use(passport.session());
 
 app.use('/auth',authRouter);
 app.use('/api',apiRouter);
+app.get('/',(req,res)=>{
+  res.sendFile(path.join(__dirname+'/views/index/index.html'));
+})
 mongoose.connect(process.env.DB_URI).then(
   () => { console.log('Database Connected')},
   err => { console.log("Database Error: " + err)})
