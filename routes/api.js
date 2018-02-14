@@ -1,8 +1,9 @@
 const router = require('express').Router();
-const fetch = require('node-fetch');
 const yelp = require('yelp-fusion');
 const client = yelp.client(process.env.YELPAPI);
-
+const User = require("../models").User;
+const Bar = require("../models").Bar;
+const ErrorLog = require('../config/error-codes.js');
 router.get('/bars/:location',(req,res)=>{
     let barResults = [];
     client.search({
@@ -35,5 +36,46 @@ router.get('/bars/:location',(req,res)=>{
     }
   })
 })
-
+//vailidate yelpID
+//vailidate not already going
+router.get('/going/:yelpId',(req,res)=>{
+  if(!req.user){
+    res.send(ErrorLog.Error102);
+  }else{
+    User.findById(req.user.id).then((user)=>{
+      if(user){
+        user.goingTo.push(req.params.yelpId);
+        return user.save().then(user=>{
+          return user;
+        })
+      }else{
+        res.send(ErrorLog.Error103)
+      }
+    }).then((user)=>{
+      return Bar.findOne({yelpId:req.params.yelpId}).exec().then(bar=>{
+        if(bar){
+          bar.usersGoing.push(req.user.id);
+          return bar.save().then(()=>{
+            res.json({operation: "Finished"});
+          }).catch(e=>{
+            console.log(e);
+          })
+        }else{
+          return new Bar({
+            yelpId: req.params.yelpId,
+            usersGoing: [req.user.id]
+          }).save().then(()=>{
+            res.json({operation: "Finished"});
+          }).catch(e=>{
+            console.log(e);
+          })
+        }
+      }).catch(e=>{
+        console.log(e)
+      })
+    }).catch(e=>{
+      console.log(e);
+    })
+  }
+})
 module.exports = router;

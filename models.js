@@ -7,7 +7,7 @@ const User = new Schema({
 
 const Bar = new Schema({
   yelpId: String,
-  usersGoing: Number,
+  usersGoing: Array,
 })
 
 module.exports.User = mongoose.model('user',User);
