@@ -36,7 +36,6 @@ router.get('/bars/:location',(req,res)=>{
     }
   })
 })
-//vailidate yelpID
 
 router.get('/going/:yelpId',(req,res)=>{
   if(!req.user){
@@ -60,6 +59,10 @@ router.get('/going/:yelpId',(req,res)=>{
       }
       return User.findById(req.user.id).then((user)=>{
         if(user){
+          if(user.goingTo.indexOf(req.params.yelpId) !== -1){
+            res.send(ErrorLog.Error105);
+            return null;
+          }
           user.goingTo.push(req.params.yelpId);
           return user.save().then(user=>{
             return user;
