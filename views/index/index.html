@@ -18,6 +18,29 @@
           <h1>Awesome Night</h1>
         </div>
       </div>
+      <!-- Search Row -->
+      <div class='row'>
+        <div class='col'>
+          <form>
+            <div class='form-group text-center'>
+              <input type='text' class='form-control' placeholder='Enter Location' id='search'>
+              <button class='btn' id='search-btn'>Search!</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </body>
 <html>
+<script>
+  $(document).ready(()=>{
+    $('#search-btn').click((event)=>{
+      event.preventDefault();
+      fetch('/api/bars/'+$('#search').val()).then(results=>{
+        return results.json()
+      }).then(results=>{
+        console.log(results);
+      })
+    })
+  })
+</script>
