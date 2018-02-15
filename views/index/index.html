@@ -43,8 +43,8 @@
       fetch('/api/bars/'+$('#search').val()).then(results=>{
         return results.json()
       }).then(results=>{
-        renderResults(results.businesses);
-      }).catch(e=>{
+          renderResults(results.businesses);
+        }).catch(e=>{
         console.log(e);
       })
     })
@@ -109,7 +109,8 @@
       infoDiv.append(infoRow3);
       infoRow4.append(infoCol4);
       infoDiv.append(infoRow4);
-      infoCol5.append('<h5>People Going:'+numberGoing(resultsArr[i].id)+'</h5>');
+      infoCol5.append('<h5>People Going: Getting Data</h5>');
+      numberGoing(resultsArr[i].id,infoCol5);
       infoRow5.append(infoCol5);
       infoDiv.append(infoRow5);
       resultDiv.append(infoDiv);
@@ -129,14 +130,15 @@
     })
   }
 
-  function numberGoing(yelpId){
-    fetch('api/numberGoing/'+yelpId,{
+  function numberGoing(yelpId,elm){
+    return fetch('api/numberGoing/'+yelpId,{
       credentials: "same-origin"
     }).then(res=>{
       return res.json()
     }).then(data=>{
       console.log(data);
-      return data.numberGoing;
+      elm.empty();
+      elm.append('<h5> People Going: '+data.numberGoing+'</h5>');
     }).catch(e=>{
       console.log(e);
     })
