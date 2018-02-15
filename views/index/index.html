@@ -61,6 +61,47 @@
       });
       imgDiv.append('<img class='+'img-fluid '+'src='+resultsArr[i].image_url+'>')
       resultDiv.append(imgDiv);
+      var infoDiv = $('<div/>',{
+        class: 'col'
+      });
+      var infoRow = $('<div/>',{
+        class: 'row'
+      });
+      infoCol = $('<div/>',{
+        class: 'col'
+      });
+      var infoRow2 = $('<div/>',{
+        class: 'row'
+      });
+      infoCol2 = $('<div/>',{
+        class: 'col'
+      });
+      var infoRow3 = $('<div/>',{
+        class: 'row'
+      });
+      infoCol3 = $('<div/>',{
+        class: 'col'
+      });
+      var infoRow4 = $('<div/>',{
+        class: 'row'
+      });
+      infoCol4 = $('<div/>',{
+        class: 'col'
+      });
+      infoCol.append('<h5>Rating: '+resultsArr[i].rating+'</h5>');
+      infoCol2.append('<h5># of Reviews:'+resultsArr[i].review_count+'</h5>');
+      infoCol3.append('<h5>Location:'+resultsArr[i].location.address1+'</h5>');
+      infoCol4.append('<button'+' class=btn'+'>'+'I am going'+'</button>');
+      infoRow.append(infoCol);
+      infoDiv.append(infoRow);
+      infoRow2.append(infoCol2);
+      infoDiv.append(infoRow2);
+      infoRow3.append(infoCol3);
+      infoDiv.append(infoRow3);
+      infoRow4.append(infoCol4);
+      infoDiv.append(infoRow4);
+      resultDiv.append(infoDiv);
+      resultDiv.append(infoDiv);
       resultRender.append(resultDiv);
       $('#root').append(resultRender);
     }
