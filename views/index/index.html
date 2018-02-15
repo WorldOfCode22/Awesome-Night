@@ -86,7 +86,13 @@
       var infoRow4 = $('<div/>',{
         class: 'row'
       });
-      infoCol4 = $('<div/>',{
+      var infoCol4 = $('<div/>',{
+        class: 'col'
+      });
+      var infoRow5 = $('<div/>',{
+        class: 'row'
+      });
+      var infoCol5 = $('<div/>',{
         class: 'col'
       });
       infoCol.append('<h5>Rating: '+resultsArr[i].rating+'</h5>');
@@ -103,6 +109,9 @@
       infoDiv.append(infoRow3);
       infoRow4.append(infoCol4);
       infoDiv.append(infoRow4);
+      infoCol5.append('<h5>People Going:'+numberGoing(resultsArr[i].id)+'</h5>');
+      infoRow5.append(infoCol5);
+      infoDiv.append(infoRow5);
       resultDiv.append(infoDiv);
       resultDiv.append(infoDiv);
       resultRender.append(resultDiv);
@@ -117,6 +126,19 @@
       return res.json()
     }).then((data)=>{
       console.log(data);
+    })
+  }
+
+  function numberGoing(yelpId){
+    fetch('api/numberGoing/'+yelpId,{
+      credentials: "same-origin"
+    }).then(res=>{
+      return res.json()
+    }).then(data=>{
+      console.log(data);
+      return data.numberGoing;
+    }).catch(e=>{
+      console.log(e);
     })
   }
 </script>
