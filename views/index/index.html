@@ -36,6 +36,7 @@
   </body>
 <html>
 <script>
+// features needed colors, button user notifaction, going counter
   $(document).ready(()=>{
     $('#search-btn').click((event)=>{
       event.preventDefault();
@@ -91,7 +92,9 @@
       infoCol.append('<h5>Rating: '+resultsArr[i].rating+'</h5>');
       infoCol2.append('<h5># of Reviews:'+resultsArr[i].review_count+'</h5>');
       infoCol3.append('<h5>Location:'+resultsArr[i].location.address1+'</h5>');
-      infoCol4.append('<button'+' class=btn'+'>'+'I am going'+'</button>');
+      var goingButton = $('<button'+' class=btn'+'>'+'I am going'+'</button>')
+      goingButton.click(()=>{goingTo(resultsArr[i].id)});
+      infoCol4.append(goingButton);
       infoRow.append(infoCol);
       infoDiv.append(infoRow);
       infoRow2.append(infoCol2);
@@ -105,5 +108,15 @@
       resultRender.append(resultDiv);
       $('#root').append(resultRender);
     }
+  }
+
+  function goingTo(yelpId){
+    fetch('api/going/'+yelpId,{
+      credentials: "same-origin"
+    }).then((res)=>{
+      return res.json()
+    }).then((data)=>{
+      console.log(data);
+    })
   }
 </script>

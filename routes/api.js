@@ -4,6 +4,7 @@ const client = yelp.client(process.env.YELPAPI);
 const User = require("../models").User;
 const Bar = require("../models").Bar;
 const ErrorLog = require('../config/error-codes.js');
+
 router.get('/bars/:location',(req,res)=>{
     let barResults = [];
     client.search({
@@ -39,6 +40,7 @@ router.get('/bars/:location',(req,res)=>{
 })
 
 router.get('/going/:yelpId',(req,res)=>{
+  console.log(req.user);
   if(!req.user){
     res.send(ErrorLog.Error102);
   }else{
@@ -101,5 +103,19 @@ router.get('/going/:yelpId',(req,res)=>{
       })
     })
   }
+})
+
+router.get('/numberGoing/:yelpId',(req,res)=>{
+  console.log(req.user);
+  if(!req.user){
+    res.redirect('../../../auth/google');
+  }
+  Bar.findOne({yelpId:req.params.yelpId}).then(bar=>{
+      if(bar === null){
+        res.json({numberGoing: 0});
+        return null;
+      }
+      res.json({numberGoing: bar.usersGoing.length});
+  })
 })
 module.exports = router;
