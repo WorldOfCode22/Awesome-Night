@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const User = new Schema({
-  goingTo: Array
+  goingTo: Array,
+  googleId: String
 });
 
 const Bar = new Schema({

@@ -42,7 +42,7 @@ router.get('/bars/:location',(req,res)=>{
 router.get('/going/:yelpId',(req,res)=>{
   console.log(req.user);
   if(!req.user){
-    res.send(ErrorLog.Error102);
+    res.json(ErrorLog.Error102);
   }else{
     client.business(req.params.yelpId).then((doc)=>{
       if(doc){
@@ -62,8 +62,10 @@ router.get('/going/:yelpId',(req,res)=>{
       }
       return User.findById(req.user.id).then((user)=>{
         if(user){
-          if(user.goingTo.indexOf(req.params.yelpId) !== -1){
-            res.send(ErrorLog.Error105);
+          let index = user.goingTo.indexOf(req.params.yelpId);
+          if( index !== -1){
+            user.goingTo = user.goingTo.splice(index,1);
+            res.json({operation: "Removed"});
             return null;
           }
           user.goingTo.push(req.params.yelpId);
@@ -106,10 +108,6 @@ router.get('/going/:yelpId',(req,res)=>{
 })
 
 router.get('/numberGoing/:yelpId',(req,res)=>{
-  console.log(req.user);
-  if(!req.user){
-    res.redirect('../../../auth/google');
-  }
   Bar.findOne({yelpId:req.params.yelpId}).then(bar=>{
       if(bar === null){
         res.json({numberGoing: 0});

@@ -35,8 +35,20 @@
     </div>
   </body>
 <html>
+<style>
+  body{
+    background-color: black
+  }
+  .container{
+    background-color: purple
+  }
+  .img-limt{
+    max-height: 150px;
+    max-width: 150px;
+  }
+</style>
 <script>
-// features needed colors, button user notifaction, going counter
+// button user notifaction
   $(document).ready(()=>{
     $('#search-btn').click((event)=>{
       event.preventDefault();
@@ -55,13 +67,19 @@
     let resultRender = $('<div/>');
     for(let i = 0; i<resultsArr.length; i++){
       var resultDiv = $('<div/>',{
-        class: 'row'
+        class: 'row result'
       });
       var imgDiv = $('<div/>',{
+        class: 'col '
+      });
+      imgDiv.append('<img class='+'img-fluid '+'src= '+resultsArr[i].image_url+'>')
+      resultDiv.append(imgDiv);
+      var infoRow5 = $('<div/>',{
+        class: 'row'
+      });
+      var infoCol5 = $('<div/>',{
         class: 'col'
       });
-      imgDiv.append('<img class='+'img-fluid '+'src='+resultsArr[i].image_url+'>')
-      resultDiv.append(imgDiv);
       var infoDiv = $('<div/>',{
         class: 'col'
       });
@@ -87,12 +105,6 @@
         class: 'row'
       });
       var infoCol4 = $('<div/>',{
-        class: 'col'
-      });
-      var infoRow5 = $('<div/>',{
-        class: 'row'
-      });
-      var infoCol5 = $('<div/>',{
         class: 'col'
       });
       infoCol.append('<h5>Rating: '+resultsArr[i].rating+'</h5>');
@@ -127,6 +139,13 @@
       return res.json()
     }).then((data)=>{
       console.log(data);
+      if(data.operation === "Finished"){
+        alert("You Are Going");
+      }else if(data.code === 102){
+        window.location ='./auth/google';
+      }else{
+        alert("You Are Now Not Going");
+      }
     })
   }
 
