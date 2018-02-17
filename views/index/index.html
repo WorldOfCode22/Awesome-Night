@@ -66,12 +66,13 @@
     console.log(resultsArr);
     let resultRender = $('<div/>');
     for(let i = 0; i<resultsArr.length; i++){
-      var resultDiv = $('<div/>',{
-        class: 'row result'
+      var resultDiv = $('<div style="border-style: solid; border-width:1px; border-color:grey"/>',{
+        class: 'row result',
       });
       var imgDiv = $('<div/>',{
         class: 'col '
       });
+      resultRender.append('<h5 class="text-center">'+resultsArr[i].name+'</h5>')
       imgDiv.append('<img class='+'img-fluid '+'src= '+resultsArr[i].image_url+'>')
       resultDiv.append(imgDiv);
       var infoRow5 = $('<div/>',{
@@ -109,7 +110,7 @@
       });
       infoCol.append('<h5>Rating: '+resultsArr[i].rating+'</h5>');
       infoCol2.append('<h5># of Reviews:'+resultsArr[i].review_count+'</h5>');
-      infoCol3.append('<h5>Location:'+resultsArr[i].location.address1+'</h5>');
+      infoCol3.append('<h5>Location:'+resultsArr[i].location.address1+' '+resultsArr[i].location.city+' ,'+resultsArr[i].location.state+'</h5>');
       var goingButton = $('<button'+' class=btn'+'>'+'I am going'+'</button>')
       goingButton.click(()=>{goingTo(resultsArr[i].id)});
       infoCol4.append(goingButton);
