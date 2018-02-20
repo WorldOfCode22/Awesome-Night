@@ -16,6 +16,9 @@
   "bugs": {
     "url": "https://github.com/WorldOfCode22/Awesome-Night/issues"
   },
+  "engines": {
+    "node": "9.4.0"
+  },
   "homepage": "https://github.com/WorldOfCode22/Awesome-Night#readme",
   "dependencies": {
     "cookie-session": "^2.0.0-beta.3",
