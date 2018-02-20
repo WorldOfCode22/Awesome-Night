@@ -63,7 +63,7 @@
   })
 
   function renderResults(resultsArr){
-    console.log(resultsArr);
+    //console.log(resultsArr);
     let resultRender = $('<div/>');
     for(let i = 0; i<resultsArr.length; i++){
       var resultDiv = $('<div style="border-style: solid; border-width:1px; border-color:grey"/>',{
@@ -139,7 +139,7 @@
     }).then((res)=>{
       return res.json()
     }).then((data)=>{
-      console.log(data);
+      //console.log(data);
       if(data.operation === "Finished"){
         alert("You Are Going");
       }else if(data.code === 102){
@@ -156,7 +156,7 @@
     }).then(res=>{
       return res.json()
     }).then(data=>{
-      console.log(data);
+      //console.log(data);
       elm.empty();
       elm.append('<h5> People Going: '+data.numberGoing+'</h5>');
     }).catch(e=>{
