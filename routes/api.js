@@ -12,6 +12,8 @@ router.get('/bars/:location',(req,res)=>{
       radius: 40000,
     }).then(response=>{
       res.json({businesses:response.jsonBody.businesses});
+  }).catch(()=>{
+    res.json({error: "No Results Found"});
   })
 })
 

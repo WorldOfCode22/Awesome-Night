@@ -56,6 +56,9 @@
       fetch('/api/bars/'+$('#search').val()).then(results=>{
         return results.json()
       }).then(results=>{
+        if(results.error){
+          alert("No Results Found");
+        }
           renderResults(results.businesses);
         }).catch(e=>{
         console.log(e);
